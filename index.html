@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Clock</title>
+
+<style>
+body{
+margin:0;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+background:#fff;
+color:#000;
+font-family:sans-serif;
+flex-direction:column;
+animation:fadeIn 0.6s ease;
+}
+
+#text{
+margin-bottom:10px;
+font-family: "함초롬돋움";
+transition:0.3s;
+font-size:30px;
+font-weight:700;
+}
+
+#clock{
+font-family: "함초롬돋움";
+font-size:150px;
+transition:0.3s;
+font-weight:700;
+}
+
+.red{ color:red; }
+
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(10px);}
+to{opacity:1; transform:translateY(0);}
+}
+
+#text:hover, #clock:hover{
+transform:scale(1.05);
+}
+</style>
+
+</head>
+<body>
+
+<div id="text"></div>
+<div id="clock"></div>
+
+<script>
+function update(){
+    const now = new Date();
+
+    let h = now.getHours();
+    const m = now.getMinutes();
+    const s = now.getSeconds();
+
+    const isSpecial =
+        (h > 13 || (h === 13 && m >= 0)) &&
+        (h < 15 || (h === 15 && m <= 10));
+
+    // 시계 표시용 (12시간)
+    const displayH = h % 12 || 12;
+    const ampm = h >= 12 ? "PM" : "AM";
+
+    document.getElementById("clock").textContent =
+        `${displayH}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")} ${ampm}`;
+
+    if(isSpecial){
+        document.getElementById("text").textContent =
+            "정답이 공개되었습니다. haesongms.riroschool.kr에서 정답을 확인하세요.";
+        document.getElementById("clock").classList.add("red");
+    }else{
+        document.getElementById("text").textContent =
+            "정답은 1:00PM 부근에 공개됩니다. haesongms.riroschool.kr에서 확인하세요";
+        document.getElementById("clock").classList.remove("red");
+    }
+}
+
+setInterval(update,1000);
+update();
+</script>
+
+</body>
+</html>
