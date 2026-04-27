@@ -70,9 +70,26 @@ function update(){
     document.getElementById("clock").textContent =
         `${displayH}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")} ${ampm}`;
 
+    // 날짜 문자열 생성 (YYYY-MM-DD)
+    const yyyy = now.getFullYear();
+    const mm = String(now.getMonth() + 1).padStart(2, "0");
+    const dd = String(now.getDate()).padStart(2, "0");
+    const today = `${yyyy}-${mm}-${dd}`;
+
+    let dateText = "";
+
+    if(today === "2026-04-28"){
+        dateText = "04-28-2026, 첫 번째 날";
+    }else if(today === "2026-04-29"){
+        dateText = "04-29-2026, 두 번째 날";
+    }else if(today === "2026-04-30"){
+        dateText = "04-30-2026, 마지막 날";
+    }else{
+        dateText = "정답은 1:00PM 부근에 공개됩니다. haesongms.riroschool.kr에서 확인하세요";
+    }
+
     if(isSpecial){
-        document.getElementById("text").textContent =
-            "정답이 공개되었습니다. haesongms.riroschool.kr에서 정답을 확인하세요.";
+        document.getElementById("text").textContent = dateText;
         document.getElementById("clock").classList.add("red");
     }else{
         document.getElementById("text").textContent =
